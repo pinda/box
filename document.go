@@ -3,6 +3,7 @@ package box
 import (
 	"errors"
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -53,4 +54,26 @@ func (s *DocumentService) FindOne(id string, fields string) (*Document, error) {
 	uResp := new(Document)
 	_, err = s.client.Do(req, uResp)
 	return uResp, err
+}
+
+func (s *DocumentService) GetThumbnail(id string, width, height int) (*http.Response, error) {
+	u := fmt.Sprintf("/documents/%s/thumbnail?width=%d&height=%d", id, width, height)
+	req, err := s.client.NewRequest("GET", u, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := s.client.Do(req, nil)
+	return resp, err
+}
+
+func (s *DocumentService) GetContent(id, extension string) (*http.Response, error) {
+	u := fmt.Sprintf("/documents/%s/content.%s", id, extension)
+	req, err := s.client.NewRequest("GET", u, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := s.client.Do(req, nil)
+	return resp, err
 }
