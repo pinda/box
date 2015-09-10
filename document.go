@@ -19,10 +19,10 @@ type Document struct {
 }
 
 type DocumentInput struct {
-	URL        string  `json:"url"`
-	Name       string  `json:"name"`
-	Thumbnails string  `json:"thumbnails"`
-	NonSVG     boolean `json:"non_svg"`
+	URL        string `json:"url"`
+	Name       string `json:"name"`
+	Thumbnails string `json:"thumbnails"`
+	NonSVG     bool   `json:"non_svg"`
 }
 
 func (s *DocumentService) NewURL(doc DocumentInput) (*Document, error) {
@@ -36,8 +36,8 @@ func (s *DocumentService) NewURL(doc DocumentInput) (*Document, error) {
 	}
 
 	uResp := new(Document)
-	resp, err := s.client.Do(req, uResp)
-	return &uResp, err
+	_, err = s.client.Do(req, uResp)
+	return uResp, err
 }
 
 func (s *DocumentService) FindOne(id string, fields string) (*Document, error) {
@@ -51,6 +51,6 @@ func (s *DocumentService) FindOne(id string, fields string) (*Document, error) {
 	}
 
 	uResp := new(Document)
-	resp, err := s.client.Do(req, uResp)
-	return &uResp, err
+	_, err = s.client.Do(req, uResp)
+	return uResp, err
 }

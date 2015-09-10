@@ -15,8 +15,9 @@ const (
 )
 
 type Client struct {
-	Token   string   // API Key obtained via box
-	BaseURL *url.URL // Base URL for API requests.
+	client  *http.Client // HTTP client used to communicate with the API
+	Token   string       // API Key obtained via box
+	BaseURL *url.URL     // Base URL for API requests.
 
 	Documents *DocumentService // Service to fetch documents related data
 	Sessions  *SessionService  // Service to fetch documents related data
@@ -24,7 +25,7 @@ type Client struct {
 
 func NewClient(token string) *Client {
 	baseURL, _ := url.Parse(BASE_URL)
-	c := &Client{Token: token, BaseURL: baseURL}
+	c := &Client{client: http.DefaultClient, Token: token, BaseURL: baseURL}
 	c.Documents = &DocumentService{client: c}
 	c.Sessions = &SessionService{client: c}
 	return c
