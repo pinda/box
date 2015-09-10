@@ -26,6 +26,7 @@ func NewClient(token string) *Client {
 	baseURL, _ := url.Parse(BASE_URL)
 	c := &Client{Token: token, BaseURL: baseURL}
 	c.Documents = &DocumentService{client: c}
+	c.Sessions = &SessionService{client: c}
 	return c
 }
 
