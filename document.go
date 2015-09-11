@@ -64,7 +64,7 @@ func (s *DocumentService) GetThumbnail(id string, width, height int) (*http.Resp
 		return nil, err
 	}
 
-	resp, err := s.client.Do(req, nil)
+	resp, err := http.DefaultClient.Do(req)
 	return resp, err
 }
 
@@ -75,6 +75,6 @@ func (s *DocumentService) GetContent(id, extension string) (*http.Response, erro
 		return nil, err
 	}
 
-	resp, err := s.client.Do(req, nil)
+	resp, err := http.DefaultClient.Do(req)
 	return resp, err
 }
