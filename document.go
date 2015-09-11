@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -31,7 +32,7 @@ func (s *DocumentService) NewURL(doc DocumentInput) (*Document, error) {
 		return nil, errors.New("URL is required")
 	}
 
-	req, err := s.client.NewRequest("POST", "documents", doc)
+	req, err := s.client.NewRequest("POST", "/1/documents", doc)
 	if err != nil {
 		return nil, err
 	}
@@ -41,10 +42,10 @@ func (s *DocumentService) NewURL(doc DocumentInput) (*Document, error) {
 	return uResp, err
 }
 
-func (s *DocumentService) FindOne(id string, fields string) (*Document, error) {
-	u := fmt.Sprintf("/documents/%s", id)
-	if fields != "" {
-		u = fmt.Sprintf("%s?fields=%s", u, fields)
+func (s *DocumentService) FindOne(id string, fields ...string) (*Document, error) {
+	u := fmt.Sprintf("/1/documents/%s", id)
+	if len(fields) > 0 {
+		u = fmt.Sprintf("%s?fields=%s", u, strings.Join(fields, ","))
 	}
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -57,7 +58,7 @@ func (s *DocumentService) FindOne(id string, fields string) (*Document, error) {
 }
 
 func (s *DocumentService) GetThumbnail(id string, width, height int) (*http.Response, error) {
-	u := fmt.Sprintf("/documents/%s/thumbnail?width=%d&height=%d", id, width, height)
+	u := fmt.Sprintf("/1/documents/%s/thumbnail?width=%d&height=%d", id, width, height)
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
 		return nil, err
@@ -68,7 +69,7 @@ func (s *DocumentService) GetThumbnail(id string, width, height int) (*http.Resp
 }
 
 func (s *DocumentService) GetContent(id, extension string) (*http.Response, error) {
-	u := fmt.Sprintf("/documents/%s/content.%s", id, extension)
+	u := fmt.Sprintf("/1/documents/%s/content.%s", id, extension)
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
 		return nil, err

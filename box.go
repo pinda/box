@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	BASE_URL = "https://view-api.box.com/1"
+	BASE_URL = "https://view-api.box.com"
 )
 
 type Client struct {
