@@ -2,8 +2,6 @@ package box
 
 import (
 	"errors"
-	"io/ioutil"
-	"log"
 	"time"
 )
 
@@ -38,9 +36,6 @@ func (s *SessionService) New(session SessionInput) (*Session, error) {
 	}
 
 	uResp := new(Session)
-	resp, err := s.client.Do(req, uResp)
-	log.Println(resp)
-	contents, _ := ioutil.ReadAll(resp.Body)
-	log.Println(string(contents))
+	_, err = s.client.Do(req, uResp)
 	return uResp, err
 }
