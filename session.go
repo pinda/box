@@ -2,6 +2,7 @@ package box
 
 import (
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -38,4 +39,15 @@ func (s *SessionService) New(session SessionInput) (*Session, error) {
 	uResp := new(Session)
 	_, err = s.client.Do(req, uResp)
 	return uResp, err
+}
+
+func (s *SessionService) Remove(id string) error {
+	u := fmt.Sprintf("/1/sessions/%s", id)
+	req, err := s.client.NewRequest("DELETE", u, nil)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.client.Do(req, nil)
+	return err
 }

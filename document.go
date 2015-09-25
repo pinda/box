@@ -78,3 +78,28 @@ func (s *DocumentService) GetContent(id, extension string) (*http.Response, erro
 	resp, err := http.DefaultClient.Do(req)
 	return resp, err
 }
+
+func (s *DocumentService) Edit(id, name string) (*Document, error) {
+	u := fmt.Sprintf("/1/documents/%s", id)
+
+	d := Document{Name: name}
+	req, err := s.client.NewRequest("PUT", u, d)
+	if err != nil {
+		return nil, err
+	}
+
+	uResp := new(Document)
+	_, err = s.client.Do(req, uResp)
+	return uResp, err
+}
+
+func (s *DocumentService) Remove(id string) error {
+	u := fmt.Sprintf("/1/documents/%s", id)
+	req, err := s.client.NewRequest("DELETE", u, nil)
+	if err != nil {
+		return err
+	}
+
+	_, err = s.client.Do(req, nil)
+	return err
+}
