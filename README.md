@@ -29,4 +29,4 @@ License
 
 The MIT License (MIT)
 
-Contributed by [Joeri Djojosoeparto](https://github.com/pinda),
+Contributed by [Joeri Djojosoeparto](https://github.com/pinda)
