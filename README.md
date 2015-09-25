@@ -4,7 +4,9 @@ Golang client library for [Box View API](http://developers.box.com/view/)
 Installation
 ------------
 
+```go
   go get github.com/pinda/box
+```
 
 Usage
 -----
